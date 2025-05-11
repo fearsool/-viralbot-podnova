@@ -6,12 +6,9 @@ export default function TestSupabase() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase.from('OutoHikaye').select('*')
-      if (error) {
-        console.error('Hata:', error)
-      } else {
-        setData(data)
-      }
+      const { data, error } = await supabase.from('hikayeler').select('*')
+      if (error) console.error('Supabase Error:', error)
+      else setData(data)
     }
 
     fetchData()
@@ -19,8 +16,12 @@ export default function TestSupabase() {
 
   return (
     <div>
-      <h1>Supabase Test Verisi</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <h1>Supabase'den Gelen Veriler</h1>
+      <ul>
+        {data.map((item, index) => (
+          <li key={index}>{JSON.stringify(item)}</li>
+        ))}
+      </ul>
     </div>
   )
 }
