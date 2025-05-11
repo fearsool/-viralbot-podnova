@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
+import { useEffect, useState } from 'react';
+import { supabase } from '../src/lib/supabaseClient';
 
 export default function TestSupabase() {
-  const [data, setData] = useState<any[]>([])
-  const [error, setError] = useState<string | null>(null)
+  const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase.from('api_keys').select('*')
-      if (error) {
-        setError(error.message)
-      } else {
-        setData(data)
-      }
-    }
-    fetchData()
-  }, [])
+      const { data, error } = await supabase.from('outohikaye_products').select('*');
+      if (error) console.error(error);
+      else setData(data);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div>
-      <h1>Supabase Test</h1>
-      {error && <p>Error: {error}</p>}
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <h1>Supabase Verileri</h1>
+      <ul>
+        {data.map((item, index) => (
+          <li key={index}>{JSON.stringify(item)}</li>
+        ))}
+      </ul>
     </div>
-  )
+  );
 }
