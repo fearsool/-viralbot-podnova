@@ -6,7 +6,7 @@ export default function TestSupabase() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase.from('hikayeler').select('*')
+      const { data, error } = await supabase.from('OutoHikaye').select('*')
       if (error) console.error('Supabase Error:', error)
       else setData(data)
     }
